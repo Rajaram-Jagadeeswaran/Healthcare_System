@@ -25,12 +25,14 @@ SECRET_KEY = '(vn0kne-tx$1*-mk*!r#xw+#1p7ccp@c959roc#86lp=vm#nqx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['2bd2c964afde4a76827eaf5ebe4f7e4d.vfs.cloud9.eu-west-1.amazonaws.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'hospital.apps.HospitalConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -117,4 +119,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+LOGIN_REDIRECT_URL = '/patients'
 STATIC_URL = '/static/'
