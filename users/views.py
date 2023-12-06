@@ -15,7 +15,7 @@ def sign_up(request):
             patient = Patient.objects.create(user=user, name=un)
 
             # Creating associated HealthRecord instance for the new user
-            health_record = HealthRecord.objects.create(user=user)
+            #health_record = HealthRecord.objects.create(user=user)
 
             messages.success(request, 'Account has been successfully created for {}.'.format(un))
             return redirect('/signin')
