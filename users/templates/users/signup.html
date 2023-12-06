@@ -31,14 +31,14 @@
             align-items: center;
         }
         .signup-form input {
-            width: 250px;
+            width: 100%; /* Use 100% width for responsiveness */
             padding: 10px;
             margin: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
         }
         .signup-form button {
-            width: 250px;
+            width: 100%; /* Use 100% width for responsiveness */
             padding: 10px;
             margin: 10px;
             border-radius: 5px;
@@ -55,18 +55,17 @@
 <body>
     <div class="signup-container">
         <h2>Sign Up</h2>
-<h4><form class="signup-form" method="POST">
-{% csrf_token %}
-{{ form.as_p }}
-<div>
-<button type="submit">Sign Up</button>
-</div>
-<p></p>
-</h4>
-<div>
-If you have an account please <a href="{% url 'sign_in' %}">Sign In</a>
-</div>
-</form>
+        <form class="signup-form" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div>
+                <button type="submit">Sign Up</button>
+            </div>
+            <p></p>
+        </form>
+        <div>
+            If you have an account please <a href="{% url 'sign_in' %}">Sign In</a>
+        </div>
     </div>
 </body>
 </html>
