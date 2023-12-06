@@ -1,0 +1,36 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: corretto17        
+      python: 3.11
+    commands:
+      - pip install --upgrade pip
+      # Install dependencies needed for running the static analysis
+      - java --version
+      - pip install -r $CODEBUILD_SRC_DIR/requirements.txt pylint
+      - yum update
+      - yum install -y jq
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
+      - export PATH=$PATH:$PWD/sonar-scanner-4.7.0.2747-linux/bin/
+      - python --version
+  pre_build:
+    commands:
+      #- pylint $CODEBUILD_SRC_DIR/*.py
+      #- pylint $CODEBUILD_SRC_DIR/*/*.py
+      - sonar-scanner -Dsonar.organization=rajaram-jagadeeswaran -Dsonar.projectKey=Rajaram-Jagadeeswaran_x22239243_devops_project -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=51b06267fc7ce0db773f130604de46aeca1d34dc
+      - sleep 5
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=Rajaram-Jagadeeswaran_x22239243_devops_project > analysis.json
+      - cat analysis.json
+  build:
+    commands:
+      - if [[ $(jq -r '.projectStatus.status' analysis.json) = "ERROR" ]] ; then CODEBUILD_BUILD_SUCCEEDING=0; fi
+artifacts:
+  files:
+    - '**/*'
+eb_codebuild_settings:
+  aws_beanstalk_application:
+    name: "x22239243-cloudDevops-prod"
+  aws_beanstalk_environment:
+    name: "x22239243-cloudDevops-prod-env"
