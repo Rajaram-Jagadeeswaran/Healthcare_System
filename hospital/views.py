@@ -1,9 +1,10 @@
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .models import Patient, HealthRecord
 
-from .forms import HealthRecordForm 
+from .forms import HealthRecordForm, PatientUpdateForm
 
 def home(request):
    return render(request, 'patients/index.html')
@@ -64,3 +65,17 @@ def health_record_delete(request, user_id, record_id):
         return redirect('hospital:health_record_list', user_id=user_id)
 
     return render(request, 'patients/health_record_confirm_delete.html', {'health_record': health_record, 'user_id': user_id})
+    
+@login_required
+def update_patient(request, user_id):
+    patient = get_object_or_404(Patient, user_id=user_id)
+
+    if request.method == 'POST':
+        form = PatientUpdateForm(request.POST, instance=patient)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital:patient_list')
+    else:
+        form = PatientUpdateForm(instance=patient)
+
+    return render(request, 'patients/patient_update_form.html', {'form': form, 'patient': patient})

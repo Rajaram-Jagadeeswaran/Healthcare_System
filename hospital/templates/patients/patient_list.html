@@ -49,6 +49,7 @@
         <a href="{% url 'hospital:home' %}">Home</a>
         <a href="#">Contact</a>
         <a href="{% url 'hospital:health_record_list' user_id=patient.id %}">My Health Record</a>
+        <a href="{% url 'hospital:update_patient' user_id=patient.id %}">Update Patient Details</a>
         <a href="{% url 'sign_out' %}">Log Out</a>
     </div>
     {% endfor %}
