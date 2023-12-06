@@ -1,0 +1,7 @@
+<h2> Create Health Record</h2>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p}}
+  <input type="submit" name="Submit"/>
+</form>
+<a href="#">Back to Patient List</a>

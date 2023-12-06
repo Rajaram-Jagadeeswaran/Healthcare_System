@@ -44,14 +44,12 @@
     <title>Patient List</title>
 </head>
 <body>
-    {% for patient in patients %}
     <div class="navbar">
-        <a href="#">Home</a>
+        <a href="{% url 'hospital:home' %}">Home</a>
         <a href="#">Contact</a>
-        <a href="{% url 'hospital:health_record_list' patient_id=patient.id %}">My Health Record</a>
+        <a href="{% url 'hospital:health_record_list' user_id=patient.id %}">My Health Record</a>
         <a href="{% url 'sign_out' %}">Log Out</a>
     </div>
-    {% endfor %}
     <div class="container">
         <h2>Patient List</h2>
         <table>
