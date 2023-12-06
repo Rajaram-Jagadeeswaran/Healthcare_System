@@ -42,14 +42,19 @@
 </head>
 <body>
     <header>
-        <h1>Welcome to Our Website</h1>
+        <h1>Here is Health Track</h1>
     </header>
+        <nav>
+        <a href="{% url 'sign_up' %}">Sign Up</a>
+        <a href="{% url 'sign_in' %}">Sign In</a>
+        <a href="{% url 'hospital:patient_list' %}">Patients</a>
+    </nav>
     <section>
         <h2>About Us</h2>
-        <p>Welcome to our website! We provide excellent services and aim to meet all your needs.</p>
+        <p>Welcome to our website! We provide excellent services and aim to meet all your healthy advices.</p>
     </section>
     <footer>
-        <p>&copy; 2023 YourCompany. All rights reserved.</p>
+        <p>&copy; 2023 AIM. All rights reserved.</p>
     </footer>
 </body>
 </html>
