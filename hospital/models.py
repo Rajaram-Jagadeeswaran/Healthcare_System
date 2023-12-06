@@ -22,7 +22,7 @@ class HealthRecord(models.Model):
     heart_rate = models.CharField(max_length=20)
     blood_sugar_level = models.CharField(default=0, max_length=20)
     cholesterol = models.FloatField()
-    body_temperature = models.FloatField()
+    body_temperature = models.FloatField(default=0)
     respiratory_rate = models.IntegerField()
     weight = models.FloatField()
     height = models.FloatField()
