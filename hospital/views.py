@@ -14,6 +14,21 @@ def patient_list(request):
     patients = Patient.objects.filter(user=user)
     context = {'patients': patients}
     return render(request, 'patients/patient_list.html', context)
+    
+@login_required
+def update_patient(request, user_id):
+    user = request.user
+    patient = get_object_or_404(Patient, user=user)
+
+    if request.method == 'POST':
+        form = PatientUpdateForm(request.POST, instance=patient)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital:patient_list')
+    else:
+        form = PatientUpdateForm(instance=patient)
+
+    return render(request, 'patients/patient_update_form.html', {'form': form, 'patient': patient})
 
 def health_record_list(request, user_id):
     user = request.user
@@ -66,16 +81,3 @@ def health_record_delete(request, user_id, record_id):
 
     return render(request, 'patients/health_record_confirm_delete.html', {'health_record': health_record, 'user_id': user_id})
     
-@login_required
-def update_patient(request, user_id):
-    patient = get_object_or_404(Patient, user_id=user_id)
-
-    if request.method == 'POST':
-        form = PatientUpdateForm(request.POST, instance=patient)
-        if form.is_valid():
-            form.save()
-            return redirect('hospital:patient_list')
-    else:
-        form = PatientUpdateForm(instance=patient)
-
-    return render(request, 'patients/patient_update_form.html', {'form': form, 'patient': patient})
