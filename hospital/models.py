@@ -21,11 +21,11 @@ class HealthRecord(models.Model):
     blood_pressure = models.CharField(max_length=20)
     heart_rate = models.CharField(max_length=20)
     blood_sugar_level = models.CharField(default=0, max_length=20)
-    cholesterol = models.FloatField()
+    cholesterol = models.FloatField(default=0)
     body_temperature = models.FloatField(default=0)
-    respiratory_rate = models.IntegerField()
-    weight = models.FloatField()
-    height = models.FloatField()
+    respiratory_rate = models.IntegerField(default=0)
+    weight = models.FloatField(default=0)
+    height = models.FloatField(default=0)
     
     def __str__(self):
         return f"Record - ({self.user.username})"
