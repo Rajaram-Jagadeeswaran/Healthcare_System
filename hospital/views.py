@@ -41,3 +41,26 @@ def health_record_create(request, user_id):
         form = HealthRecordForm(initial={'user': user.username})
 
     return render(request, 'patients/health_record_create_form.html', {'form': form, 'user': user})
+    
+def health_record_update(request, user_id, record_id):
+    health_record = get_object_or_404(HealthRecord, id=record_id, user_id=user_id)
+    
+    if request.method == 'POST':
+        form = HealthRecordForm(request.POST, instance=health_record)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital:health_record_list', user_id=user_id)
+    else:
+        form = HealthRecordForm(instance=health_record)
+
+    return render(request, 'patients/health_record_update_form.html', {'form': form, 'user_id': user_id, 'record_id': record_id})
+
+
+def health_record_delete(request, user_id, record_id):
+    health_record = get_object_or_404(HealthRecord, id=record_id, user_id=user_id)
+
+    if request.method == 'POST':
+        health_record.delete()
+        return redirect('hospital:health_record_list', user_id=user_id)
+
+    return render(request, 'patients/health_record_confirm_delete.html', {'health_record': health_record, 'user_id': user_id})

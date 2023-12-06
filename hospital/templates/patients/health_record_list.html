@@ -78,7 +78,8 @@
                     <th>Body Temperature</th>
                     <th>Respiratory Rate</th>
                     <th>Weight</th>
-                    <th>Height</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -93,6 +94,8 @@
                     <td>{{ record.respiratory_rate }}</td>
                     <td>{{ record.weight }}</td>
                     <td>{{ record.height }}</td>
+                    <td><a href="{% url 'hospital:health_record_update' user_id=user.id record_id=record.id %}">Update</a></td>
+                    <td><a href="{% url 'hospital:health_record_delete' user_id=user.id record_id=record.id %}">Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

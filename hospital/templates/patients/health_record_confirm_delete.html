@@ -1,0 +1,7 @@
+  <h2>Confirm Record Deletion</h2>
+  <p>Are you sure you want to delete the record?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirm</button>
+    <p><h4><a href="{% url 'hospital:health_record_list' user_id=user_id %}">Cancel</a></h4></p>
+  </form>
