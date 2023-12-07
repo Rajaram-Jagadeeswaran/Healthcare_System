@@ -9,6 +9,7 @@ from .forms import HealthRecordForm, PatientUpdateForm
 def home(request):
    return render(request, 'patients/index.html')
 
+@login_required
 def patient_list(request):
     user = request.user
     patients = Patient.objects.filter(user=user)
@@ -30,6 +31,7 @@ def update_patient(request, user_id):
 
     return render(request, 'patients/patient_update_form.html', {'form': form, 'patient': patient})
 
+@login_required
 def health_record_list(request, user_id):
     user = request.user
     health_records = HealthRecord.objects.filter(user=user)
@@ -37,9 +39,11 @@ def health_record_list(request, user_id):
     print(health_records)
     return render(request, 'patients/health_record_list.html', {'user': user, 'health_records': health_records})
 
+@login_required
 def new(request):
     return render(request, 'patients/health_record_create_form.html', {'form': HealthRecordForm})
-   
+
+@login_required   
 def health_record_create(request, user_id):
     user = request.user
     health_records = HealthRecord.objects.filter(user=user)
