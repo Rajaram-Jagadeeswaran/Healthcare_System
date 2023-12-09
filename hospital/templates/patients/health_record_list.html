@@ -106,7 +106,9 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script defer>
         function createBlob(data, mimeType) {
             var BlobBuilder = window.BlobBuilder || window.MozBlobBuilder || window.WebKitBlobBuilder || window.MSBlobBuilder;
             var blob;
@@ -123,8 +125,22 @@
         }
     
         function convertArrayOfObjectsToCSV(data) {
-            // Your existing code for converting data to CSV
-        }
+            var csv = '';
+        
+            // Custom header row
+            var customHeader = [
+                'Date', 'Year', 'Timing', 'Blood Pressure', 'Heart Rate', 
+                'Blood Sugar', 'Cholesterol', 'Body Temperature', 
+                'Respiratory Rate', 'Weight', 'Height'
+            ];
+            csv += customHeader.join(',') + '\n';
+        
+            // Add data rows
+            for (var i = 0; i < data.length; i++) {
+                csv += data[i].join(',') + '\n';
+            }
+            return csv;
+        }   
     
         function downloadCSV(csv, filename) {
             var blob = createBlob(csv, 'text/csv');
@@ -150,15 +166,18 @@
         }
     
         function exportTableToCSV(filename) {
-            let csv = [];
-            let rows = document.querySelectorAll('table tr');
-            for (let i = 0; i < rows.length; i++) {
-                let row = [], cols = rows[i].querySelectorAll('td, th');
-                for (let j = 0; j < cols.length; j++)
-                    row.push(cols[j].innerText);
-                csv.push(row.join(','));
+            var healthRecords = [];
+            var rows = document.querySelectorAll('table tbody tr');
+            for (var i = 0; i < rows.length; i++) {
+                var cols = rows[i].querySelectorAll('td');
+                var record = [];
+                for (var j = 0; j < cols.length; j++) {
+                    record.push(cols[j].innerText);
+                }
+                healthRecords.push(record);
             }
-            downloadCSV(convertArrayOfObjectsToCSV(csv), filename);
+    
+            downloadCSV(convertArrayOfObjectsToCSV(healthRecords), filename);
         }
     </script>
 </body>
