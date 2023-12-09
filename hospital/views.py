@@ -32,7 +32,7 @@ def update_patient(request, user_id):
 
     return render(request, 'patients/patient_update_form.html', {'form': form, 'patient': patient})
 
-def health_record_list(request):
+def health_record_list(request, user_id):
     user = request.user
     health_records = HealthRecord.objects.filter(user=user)
     print(user)
