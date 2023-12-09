@@ -11,14 +11,14 @@ HEALTH_RECORD_LIST_URL = 'hospital:health_record_list'
 def home(request):
    return render(request, 'patients/index.html')
 
-def patientList(request):
+def patient_list(request):
     user = request.user
     patients = Patient.objects.filter(user=user)
     context = {'patients': patients}
     return render(request, 'patients/patient_list.html', context)
     
 @login_required
-def updatePatient(request, user_id):
+def update_patient(request, user_id):
     user = request.user
     patient = get_object_or_404(Patient, user=user)
 
@@ -32,7 +32,7 @@ def updatePatient(request, user_id):
 
     return render(request, 'patients/patient_update_form.html', {'form': form, 'patient': patient})
 
-def healthRecordList(request, user_id):
+def health_record_list(request, user_id):
     user = request.user
     health_records = HealthRecord.objects.filter(user=user)
     print(user)
@@ -42,7 +42,7 @@ def healthRecordList(request, user_id):
 def new(request):
     return render(request, 'patients/health_record_create_form.html', {'form': HealthRecordForm})
 
-def healthRecordCreate(request, user_id):
+def health_record_create(request, user_id):
     user = request.user
     health_records = HealthRecord.objects.filter(user=user)
     print(user)
@@ -60,7 +60,7 @@ def healthRecordCreate(request, user_id):
 
     return render(request, 'patients/health_record_create_form.html', {'form': form, 'user': user})
     
-def healthRecordUpdate(request, user_id, record_id):
+def health_record_update(request, user_id, record_id):
     health_record = get_object_or_404(HealthRecord, id=record_id, user_id=user_id)
     
     if request.method == 'POST':
@@ -74,7 +74,7 @@ def healthRecordUpdate(request, user_id, record_id):
     return render(request, 'patients/health_record_update_form.html', {'form': form, 'user_id': user_id, 'record_id': record_id})
 
 
-def healthRecordDelete(request, user_id, record_id):
+def health_record_delete(request, user_id, record_id):
     health_record = get_object_or_404(HealthRecord, id=record_id, user_id=user_id)
 
     if request.method == 'POST':
