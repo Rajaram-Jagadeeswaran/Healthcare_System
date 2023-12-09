@@ -18,6 +18,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 new_secret_key = get_random_secret_key()
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+CSRF_USE_SESSIONS = True
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -116,9 +119,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-CSRF_USE_SESSIONS = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

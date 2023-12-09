@@ -42,7 +42,7 @@ def health_record_list(request, user_id):
 def new(request):
     return render(request, 'patients/health_record_create_form.html', {'form': HealthRecordForm})
 
-def health_record_create(request):
+def health_record_create(request, user_id):
     user = request.user
     health_records = HealthRecord.objects.filter(user=user)
     print(user)
