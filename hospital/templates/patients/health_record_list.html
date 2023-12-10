@@ -68,7 +68,6 @@
         <h1 class="mb-4">Health Records for {{ patient.name }}</h1>
         <a href="{% url 'hospital:health_record_create' user_id=user.id %}" class="btn btn-primary mb-3">Add New Health Record</a>
         <table class="table table-bordered">
-            <caption>Health Records Table - Summary of Health Metrics</caption>
             <thead class="thead-dark">
                 <tr>
                     <th>Updated On</th>

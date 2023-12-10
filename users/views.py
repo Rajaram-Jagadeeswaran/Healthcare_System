@@ -8,6 +8,7 @@ def sign_up(request):
     if request.method == "POST":
         form = UserSignUpForm(request.POST)
         if form.is_valid():
+            user = form.save()
             un = form.cleaned_data.get('username')
             messages.success(request, 'Account has been successfully created for {}.'.format(un))
             return redirect('/signin')

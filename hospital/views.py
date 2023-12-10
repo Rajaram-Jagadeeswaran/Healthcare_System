@@ -6,8 +6,6 @@ from .models import Patient, HealthRecord
 
 from .forms import HealthRecordForm, PatientUpdateForm
 
-HEALTH_RECORD_LIST_URL = 'hospital:health_record_list'
-
 def home(request):
    return render(request, 'patients/index.html')
 
@@ -54,7 +52,7 @@ def health_record_create(request, user_id):
             health_record = form.save(commit=False)
             health_record.user = user
             health_record.save()
-            return redirect(HEALTH_RECORD_LIST_URL, user_id=user.id)
+            return redirect('hospital:health_record_list', user_id=user.id)
     else:
         form = HealthRecordForm(initial={'user': user.username})
 
@@ -67,7 +65,7 @@ def health_record_update(request, user_id, record_id):
         form = HealthRecordForm(request.POST, instance=health_record)
         if form.is_valid():
             form.save()
-            return redirect(HEALTH_RECORD_LIST_URL, user_id=user_id)
+            return redirect('hospital:health_record_list', user_id=user_id)
     else:
         form = HealthRecordForm(instance=health_record)
 
@@ -79,7 +77,7 @@ def health_record_delete(request, user_id, record_id):
 
     if request.method == 'POST':
         health_record.delete()
-        return redirect(HEALTH_RECORD_LIST_URL, user_id=user_id)
+        return redirect('hospital:health_record_list', user_id=user_id)
 
     return render(request, 'patients/health_record_confirm_delete.html', {'health_record': health_record, 'user_id': user_id})
     
