@@ -46,7 +46,7 @@ def new(request):
     """Render the form for creating a new health record."""
     return render(request, 'patients/health_record_create_form.html', {'form': HealthRecordForm})
 
-def health_record_create(request, user_id):
+def health_record_create(request):
     """Create a new health record."""
     user = request.user
     health_records = HealthRecord.objects.filter(user=user)
