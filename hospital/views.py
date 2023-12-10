@@ -3,7 +3,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Patient, HealthRecord
-
 from .forms import HealthRecordForm, PatientUpdateForm
 
 HEALTH_RECORD_LIST_URL = 'hospital:health_record_list'
@@ -82,4 +81,3 @@ def health_record_delete(request, user_id, record_id):
         return redirect(HEALTH_RECORD_LIST_URL, user_id=user_id)
 
     return render(request, 'patients/health_record_confirm_delete.html', {'health_record': health_record, 'user_id': user_id})
-    
