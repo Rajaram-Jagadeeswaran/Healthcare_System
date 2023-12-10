@@ -1,7 +1,8 @@
+"""URL configuration for the hospital app"""
 from django.urls import path
 from . import views
 
-app_name = 'hospital'
+APP_NAME = 'hospital'
 
 urlpatterns = [
     path('', views.home, name='home'),

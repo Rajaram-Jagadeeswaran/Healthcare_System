@@ -1,8 +1,11 @@
-from django.contrib import admin
-# Register your models here.
+"""
+Hospital admin module.
 
-from .models import Patient
-from .models import HealthRecord
+Register models with the Django admin site.
+"""
+
+from django.contrib import admin
+from .models import Patient, HealthRecord
 
 admin.site.register(Patient)
 admin.site.register(HealthRecord)

@@ -8,9 +8,11 @@ from .forms import HealthRecordForm, PatientUpdateForm
 HEALTH_RECORD_LIST_URL = 'hospital:health_record_list'
 
 def home(request):
+    """Render the home page."""
    return render(request, 'patients/index.html')
 
 def patient_list(request):
+    """Render the list of patients."""
     user = request.user
     patients = Patient.objects.filter(user=user)
     context = {'patients': patients}
@@ -18,6 +20,7 @@ def patient_list(request):
     
 @login_required
 def update_patient(request, user_id):
+    """Update patient information."""
     user = request.user
     patient = get_object_or_404(Patient, user=user)
 
@@ -32,6 +35,7 @@ def update_patient(request, user_id):
     return render(request, 'patients/patient_update_form.html', {'form': form, 'patient': patient})
 
 def health_record_list(request, user_id):
+    """Render the list of health records for a user."""
     user = request.user
     health_records = HealthRecord.objects.filter(user=user)
     print(user)
@@ -39,9 +43,11 @@ def health_record_list(request, user_id):
     return render(request, 'patients/health_record_list.html', {'user': user, 'health_records': health_records})
 
 def new(request):
+    """Render the form for creating a new health record."""
     return render(request, 'patients/health_record_create_form.html', {'form': HealthRecordForm})
 
 def health_record_create(request, user_id):
+    """Create a new health record."""
     user = request.user
     health_records = HealthRecord.objects.filter(user=user)
     print(user)
@@ -60,6 +66,7 @@ def health_record_create(request, user_id):
     return render(request, 'patients/health_record_create_form.html', {'form': form, 'user': user})
     
 def health_record_update(request, user_id, record_id):
+    """Update a health record."""
     health_record = get_object_or_404(HealthRecord, id=record_id, user_id=user_id)
     
     if request.method == 'POST':
@@ -74,6 +81,7 @@ def health_record_update(request, user_id, record_id):
 
 
 def health_record_delete(request, user_id, record_id):
+    """Delete a health record."""
     health_record = get_object_or_404(HealthRecord, id=record_id, user_id=user_id)
 
     if request.method == 'POST':

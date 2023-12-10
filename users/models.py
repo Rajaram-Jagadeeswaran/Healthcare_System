@@ -1,3 +1,5 @@
+"""Define models for the users app."""
+
 from django.db import models
 
-# Create your models here.
+# Your models go here
