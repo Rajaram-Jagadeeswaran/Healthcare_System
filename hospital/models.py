@@ -40,4 +40,4 @@ class HealthRecord(models.Model):
         """
         String representation of the health record.
         """
-        return f"Record - ({self.user.username})"
+        return f"Record - ({self.user.username if self.user else 'None'})"

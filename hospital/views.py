@@ -9,7 +9,7 @@ HEALTH_RECORD_LIST_URL = 'hospital:health_record_list'
 
 def home(request):
     """Render the home page."""
-   return render(request, 'patients/index.html')
+    return render(request, 'patients/index.html')
 
 def patient_list(request):
     """Render the list of patients."""
