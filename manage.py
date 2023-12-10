@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""Django administrative functionalities of Hospital-Patient's Health Tracking system"""
 import os
 import sys
 
