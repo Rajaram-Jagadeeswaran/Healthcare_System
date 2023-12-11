@@ -62,7 +62,6 @@
     {% for patient in patients %}
     <div class="navbar">
         <a href="{% url 'hospital:home' %}">Home</a>
-        <a href="#">Contact</a>
         <a href="{% url 'hospital:health_record_list' user_id=patient.id %}">My Health Record</a>
         <a href="{% url 'hospital:update_patient' user_id=patient.id %}">Update Patient Details</a>
         <a href="{% url 'sign_out' %}">Log Out</a>
@@ -81,10 +80,12 @@
 
         <div class="tab-content">
             <div class="tab-pane fade show active" id="profile{{ patient.id }}">
-                <p><strong>ID:</strong> {{ patient.id }}</p>
                 <p><strong>Name:</strong> {{ patient.name }}</p>
                 <p><strong>Date of Birth:</strong> {{ patient.date_of_birth }}</p>
-                <!-- Add other patient details here -->
+                <p><strong>Gender:</strong> {{ patient.gender }}</p>
+                <p><strong>Email:</strong> {{ patient.email }}</p>
+                <p><strong>Contact:</strong> {{ patient.contact }}</p>
+                <p><strong>Address:</strong> {{ patient.address }}</p>
             </div>
 
             <div class="tab-pane fade" id="health{{ patient.id }}">
