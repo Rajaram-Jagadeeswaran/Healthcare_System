@@ -11,21 +11,20 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import secrets
 
-secretKey = secrets.token_hex(42)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secretKey
+SECRET_KEY = '(vn0kne-tx$1*-mk*!r#xw+#1p7ccp@c959roc#86lp=vm#nqx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['x22239243-clouddevops-prod-env.eba-43nmqkpv.sa-east-1.elasticbeanstalk.com']
 
@@ -116,6 +115,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
