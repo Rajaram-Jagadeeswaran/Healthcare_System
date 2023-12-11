@@ -11,7 +11,7 @@ def home(request):
     """Render the home page."""
     return render(request, 'patients/index.html')
 
-def patient_list(request, user_id):
+def patient_list(request):
     """Render the list of patients."""
     user = request.user
     patients = Patient.objects.filter(user=user)
