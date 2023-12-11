@@ -11,7 +11,7 @@ def home(request):
     """Render the home page."""
     return render(request, 'patients/index.html')
 
-def patient_list(request):
+def patient_list(request, user_id):
     """Render the list of patients."""
     user = request.user
     patients = Patient.objects.filter(user=user)
@@ -89,3 +89,8 @@ def health_record_delete(request, user_id, record_id):
         return redirect(HEALTH_RECORD_LIST_URL, user_id=user_id)
 
     return render(request, 'patients/health_record_confirm_delete.html', {'health_record': health_record, 'user_id': user_id})
+    
+def health_chart(request, user_id):
+    user = request.user
+    health_records = HealthRecord.objects.filter(user=user)
+    return render(request, 'patients/health_chart.html', {'user': user, 'health_records': health_records})

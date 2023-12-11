@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        table {
+            width: 100%;
+            margin-top: 30px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .export-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .export-btn:hover {
+            background-color: #45a049;
+        }
+        
+         .chart-container {
+          width: 50%;
+          height: 200px;
+          margin: 20px auto;
+        }
+    
+        .chart-title {
+          font-size: 18px;
+          text-align: center;
+          margin-bottom: 10px;
+        }
+    
+        .chart-legend {
+          margin-bottom: 20px;
+        }
+    
+        .chart-series {
+          color: #007bff;
+          fill: none;
+        }
+    
+        .chart-legend-entry {
+          display: flex;
+          align-items: center;
+        }
+    
+        .chart-legend-label {
+          margin-right: 10px;
+        }
+    
+        /* CSS for chart buttons */
+        .chart-button {
+          display: block;
+          margin: 10px auto;
+          padding: 15px 30px;
+          background-color: #4CAF50;
+          color: #ffffff;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 18px;
+        }
+        .chart-button:hover {
+          background-color: #45a049;
+          
+        }
+          
+        .chart-container {
+            width: 48%; /* Adjust the width as needed */
+            height: 350px;
+            margin: 20px 1%; /* Add some margin between charts */
+            float: left;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+    
+    <title>My Health Record Chart</title>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Back To HealthRecord</a>
+        <a href="{% url 'sign_out' %}">Log Out</a>
+    </div>
+    <div class="container mt-5 clearfix">
+        <h1 class="mb-4">My Chart view</h1>
+        <div class="chart-container" id="bloodSugarChart">
+            <div class="chart-title">Blood Sugar Trend</div>
+        </div>
+      
+        <div class="chart-container" id="bloodPressureChart">
+            <div class="chart-title">Blood Pressure Trend</div>
+        </div>
+
+        <div class="chart-container" id="cholesterolChart">
+            <div class="chart-title">Cholesterol Level Trend</div>
+        </div>
+        
+        <div class="chart-container" id="respiratoryChart">
+            <div class="chart-title">Respiratory Level Trend</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            drawBloodSugarChart();
+            drawBloodPressureChart();
+            drawCholesterolChart();
+            drawRespiratoryChart();
+        }
+
+        function drawBloodSugarChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Date');
+            data.addColumn('number', 'Blood Sugar');
+
+            var healthRecords = [
+                {% for record in health_records %}
+                    ['{{ record.timestamp }}', {{ record.blood_sugar_level }}],
+                {% endfor %}
+            ];
+
+            data.addRows(healthRecords);
+
+            var options = {
+                title: 'Blood Sugar Trend Over Time',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                vAxis: { title: 'Blood Sugar' },
+                hAxis: { title: 'Date' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('bloodSugarChart'));
+            chart.draw(data, options);
+        }
+
+        function drawBloodPressureChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Date');
+            data.addColumn('number', 'Blood Pressure');
+
+            var healthRecords = [
+                {% for record in health_records %}
+                    ['{{ record.timestamp }}', {{ record.blood_pressure }}],
+                {% endfor %}
+            ];
+
+            data.addRows(healthRecords);
+
+            var options = {
+                title: 'Blood Pressure Trend Over Time',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                vAxis: { title: 'Blood Pressure' },
+                hAxis: { title: 'Date' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('bloodPressureChart'));
+            chart.draw(data, options);
+        }
+
+        function drawCholesterolChart() {
+                        var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Date');
+            data.addColumn('number', 'Cholesterol Level');
+
+            var healthRecords = [
+                {% for record in health_records %}
+                    ['{{ record.timestamp }}', {{ record.cholesterol }}],
+                {% endfor %}
+            ];
+
+            data.addRows(healthRecords);
+
+            var options = {
+                title: 'Cholesterol Level Trend Over Time',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                vAxis: { title: 'Cholesterol Level' },
+                hAxis: { title: 'Date' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('cholesterolChart'));
+            chart.draw(data, options);
+        }
+        
+        function drawRespiratoryChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Date');
+            data.addColumn('number', 'Respiratory Rate');
+
+            var healthRecords = [
+                {% for record in health_records %}
+                    ['{{ record.timestamp }}', {{ record.respiratory_rate }}],
+                {% endfor %}
+            ];
+
+            data.addRows(healthRecords);
+
+            var options = {
+                title: 'Respiratory Rate Trend Over Time',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                vAxis: { title: 'Respiratory Rate' },
+                hAxis: { title: 'Date' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('respiratoryChart'));
+            chart.draw(data, options);
+        }
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+</script>
+</body>
+</html>

@@ -61,7 +61,7 @@
 <body>
     <div class="navbar">
         <a href="{% url 'hospital:home' %}">Home</a>
-        <a href="#">Contact</a>
+        <a href="{% url 'hospital:health_chart' user_id=user.id %}" class="btn btn-primary mb-3">Go to my Health Record Chart</a>
         <a href="{% url 'sign_out' %}">Log Out</a>
     </div>
     <div class="container mt-5">
