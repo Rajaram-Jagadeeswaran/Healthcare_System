@@ -55,6 +55,13 @@
         .export-btn:hover {
             background-color: #45a049;
         }
+        
+        .no-records-message {
+        color: #888;
+        font-size: 18px;
+        text-align: center;
+        margin-top: 20px;
+    }
     </style>
     <title>My Health Records</title>
 </head>
@@ -64,45 +71,52 @@
         <a href="{% url 'hospital:health_chart' user_id=user.id %}">Go to my Health Chart</a>
         <a href="{% url 'sign_out' %}">Log Out</a>
     </div>
-    <div class="container mt-5">
+ <div class="container mt-5">
         <h1 class="mb-4">Health Records for {{ patient.name }}</h1>
         <a href="{% url 'hospital:health_record_create' user_id=user.id %}" class="btn btn-primary mb-3">Add New Health Record</a>
-        <table class="table table-bordered">
-            <caption>Health Records Table - Summary of Health Metrics</caption>
-            <thead class="thead-dark">
-                <tr>
-                    <th>Updated On</th>
-                    <th>Blood Pressure</th>
-                    <th>Heart Rate</th>
-                    <th>Blood Sugar</th>
-                    <th>Cholesterol</th>
-                    <th>Body Temperature</th>
-                    <th>Respiratory Rate</th>
-                    <th>Weight</th>
-                    <th>Height</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in health_records %}
-                <tr>
-                    <td>{{ record.timestamp }}</td>
-                    <td>{{ record.blood_pressure }}</td>
-                    <td>{{ record.heart_rate }}</td>
-                    <td>{{ record.blood_sugar_level }}</td>
-                    <td>{{ record.cholesterol }}</td>
-                    <td>{{ record.body_temperature }}</td>
-                    <td>{{ record.respiratory_rate }}</td>
-                    <td>{{ record.weight }}</td>
-                    <td>{{ record.height }}</td>
-                    <td><a href="{% url 'hospital:health_record_update' user_id=user.id record_id=record.id %}">Update</a></td>
-                    <td><a href="{% url 'hospital:health_record_delete' user_id=user.id record_id=record.id %}">Delete</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <button class="export-btn" onclick="exportTableToCSV('health-records.csv')">Export to CSV</button>
+
+        {% if health_records %}
+            <table class="table table-bordered">
+                <caption>Health Records Table - Summary of Health Metrics</caption>
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Updated On</th>
+                        <th>Blood Pressure</th>
+                        <th>Heart Rate</th>
+                        <th>Blood Sugar</th>
+                        <th>Cholesterol</th>
+                        <th>Body Temperature</th>
+                        <th>Respiratory Rate</th>
+                        <th>Weight</th>
+                        <th>Height</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in health_records %}
+                        <tr>
+                            <td>{{ record.timestamp }}</td>
+                            <td>{{ record.blood_pressure }}</td>
+                            <td>{{ record.heart_rate }}</td>
+                            <td>{{ record.blood_sugar_level }}</td>
+                            <td>{{ record.cholesterol }}</td>
+                            <td>{{ record.body_temperature }}</td>
+                            <td>{{ record.respiratory_rate }}</td>
+                            <td>{{ record.weight }}</td>
+                            <td>{{ record.height }}</td>
+                            <td><a href="{% url 'hospital:health_record_update' user_id=user.id record_id=record.id %}">Update</a></td>
+                            <td><a href="{% url 'hospital:health_record_delete' user_id=user.id record_id=record.id %}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button class="export-btn" onclick="exportTableToCSV('health-records.csv')">Export to CSV</button>
+        {% else %}
+            <p class="no-records-message">
+                Curretly No Records available.. If you want please add your record by clicking Add New Health Record button.!!
+            </p>
+        {% endif %}
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

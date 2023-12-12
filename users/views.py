@@ -3,11 +3,10 @@ Module: users.views
 Description: Contains views related to user management.
 """
 
-from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserSignUpForm
-from hospital.models import Patient, HealthRecord
+from hospital.models import Patient
 
 def sign_up(request):
     """
@@ -28,6 +27,7 @@ def sign_up(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             user = form.save()
+            Patient.objects.create(user=user, name=username)
             messages.success(request, 'Account has been successfully created for {}.'.format(username))
             return redirect('/signin')
     elif request.method == "GET":
